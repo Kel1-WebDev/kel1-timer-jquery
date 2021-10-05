@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+	<link href="http://fonts.cdnfonts.com/css/digital-7-mono" rel="stylesheet">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="scripts/stopwatch-list.js"></script>
+	<script src="scripts/stopwatch-component.js"></script>
+	<script>
+		window.addEventListener('beforeunload', function (e) {
+			e.preventDefault()
+
+			localStorage.setItem('closed-time', new Date());
+		});
+	</script>
+	<link rel="stylesheet" href="styles/main.css" />
+	<link href="http://fonts.cdnfonts.com/css/led-digital-7" rel="stylesheet">
+</head>
+
+<body class="center-content background-illustration background-broken-white">
+	<stopwatch-list></stopwatch-list>
+</body>
+
+</html>
