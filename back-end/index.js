@@ -16,6 +16,9 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+const timer = require('./timer');
+app.post('/timer', timer.saveTimer);
+
 app.use(function (req, res) {
   res.status(404).send({ url: req.originalUrl + ' not found' })
 });
