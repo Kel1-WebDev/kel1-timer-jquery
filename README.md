@@ -124,7 +124,7 @@ To add the project to your computer within this contribution you could do:
 1. Open command prompt
 2. `cd` to the destination that you desire on your PC
 3. `git clone https://github.com/ReyRizki/kel1-timer-javascript.git`
-4. And voila! the roject is now on your PC!
+4. And voila! the project is now on your PC!
 
 To upload your changes of the project you could create a new branches for it within ths steps on your command prompt:
 1. `git checkout -b new branch name`
