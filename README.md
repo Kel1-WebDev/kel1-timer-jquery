@@ -72,7 +72,7 @@ cronômetro (in Italian) or commonly known as a stopwatch (in English) is an app
 
 1. Clone the repository
 	```sh 
-	 git clone https://github.com/ReyRizki/kel1-timer-javascript
+	 git clone https://github.com/ReyRizki/kel1-timer-jquery.git
 	 ```
 2. Configure PostgreSQL database
     * Create database with name cronometro
