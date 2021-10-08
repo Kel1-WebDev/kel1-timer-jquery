@@ -1,0 +1,9 @@
+CREATE TABLE timer (
+	id SERIAL PRIMARY KEY,
+	timer_name VARCHAR(20),
+	time INTEGER,
+	state VARCHAR(6)
+);
+
+ALTER TABLE timer ALTER COLUMN time SET DEFAULT 0;
+ALTER TABLE timer ALTER COLUMN state SET DEFAULT 'stop';
