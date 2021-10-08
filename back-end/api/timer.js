@@ -9,7 +9,7 @@ module.exports = function (app) {
                 if (error) {
                     throw error
                 }
-                response.status(201).send(`timer tersimpan dengan ID : ${results.rows[0].id}`)
+                response.status(201).send({id:results.rows[0].id})
             })
         });
 }
