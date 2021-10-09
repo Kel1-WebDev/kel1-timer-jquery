@@ -1,3 +1,4 @@
+const { request, response } = require('express');
 const { pool } = require('../db/connect');
 
 module.exports = function (app) {
@@ -11,5 +12,23 @@ module.exports = function (app) {
                 }
                 response.status(201).send(`timer tersimpan`)
             })
-        });
+        })
+
+        .get((request, response) => {
+            pool.query('SELECT * FROM timer', (error, results) => {
+                if (error) {
+                    throw error
+                }
+                response.status(200).json(results.rows)
+            })
+        })
+
+        .delete((request, response) => {
+            pool.query('DELETE * FROM timer', (error, results) => {
+                if (error) {
+                    throw error
+                }
+                response.status(201).send(`timer deleted`)
+            })
+        })
 }
