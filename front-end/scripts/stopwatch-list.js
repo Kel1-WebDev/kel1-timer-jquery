@@ -30,6 +30,8 @@ class StopwatchList extends HTMLElement {
     constructor() {
         super();
 
+        this.loadStopwatch = this.loadStopwatch.bind(this);
+
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.appendChild(stopwatchListTemplate.content.cloneNode(true));
 
@@ -42,19 +44,23 @@ class StopwatchList extends HTMLElement {
         this.submitButton = this.shadowRoot.querySelector('#submit');
         this.container = this.shadowRoot.querySelector('#container');
 
-        let timer = JSON.parse(localStorage.getItem('timer'));
+        const loadStopwatch = (timer) => this.loadStopwatch(timer);
 
-        if (timer) {
-            this.loadStopwatch(timer);
-        } else {
-            localStorage.setItem('timer', JSON.stringify([]));
-            this.lastTimerId = 0;
-        }
+        $.ajax({
+            url: "http://localhost:3000/timer",
+            type: "GET",
+            dataType: "json",
+        })
+        .done(function(timer) {
+            loadStopwatch(timer);
 
-        if (timer.length >= 10) {
-            this.submitButton.setAttribute("disabled", "disabled");
-            this.submitButton.setAttribute("style", "background-color:#CCCCCC; border-color:transparent");
-        }
+            if (timer.length >= 10) {
+                this.submitButton.setAttribute("disabled", "disabled");
+                this.submitButton.setAttribute("style", "background-color:#CCCCCC; border-color:transparent");
+            }
+        })
+
+        // let timer = JSON.parse(localStorage.getItem('timer'));
     }
 
     connectedCallback() {
@@ -104,7 +110,7 @@ class StopwatchList extends HTMLElement {
             const stopwatch = document.createElement('stopwatch-custom');
 
             stopwatch.setAttribute('id', "stopwatch-" + timer[i].id);
-            stopwatch.setAttribute('name', timer[i].name);
+            stopwatch.setAttribute('name', timer[i].timer_name);
             stopwatch.setAttribute('state', timer[i].state);
             stopwatch.setAttribute('time', timer[i].time);
             stopwatch.enableCreateButton = this.enableCreateButton;
