@@ -42,19 +42,28 @@ class StopwatchList extends HTMLElement {
         this.submitButton = this.shadowRoot.querySelector('#submit');
         this.container = this.shadowRoot.querySelector('#container');
 
-        let timer = JSON.parse(localStorage.getItem('timer'));
+        $.ajax({
+            url: "http://localhost:3000/timer",
+            type: "GET",
+            dataType: "json",
+        })
+        .done(function( json ) {
+            console.log(json)
+        })
 
-        if (timer) {
-            this.loadStopwatch(timer);
-        } else {
-            localStorage.setItem('timer', JSON.stringify([]));
-            this.lastTimerId = 0;
-        }
+        // let timer = JSON.parse(localStorage.getItem('timer'));
 
-        if (timer.length >= 10) {
-            this.submitButton.setAttribute("disabled", "disabled");
-            this.submitButton.setAttribute("style", "background-color:#CCCCCC; border-color:transparent");
-        }
+        // if (timer) {
+        //     this.loadStopwatch(timer);
+        // } else {
+        //     localStorage.setItem('timer', JSON.stringify([]));
+        //     this.lastTimerId = 0;
+        // }
+
+        // if (timer.length >= 10) {
+        //     this.submitButton.setAttribute("disabled", "disabled");
+        //     this.submitButton.setAttribute("style", "background-color:#CCCCCC; border-color:transparent");
+        // }
     }
 
     connectedCallback() {
