@@ -30,6 +30,8 @@ class StopwatchList extends HTMLElement {
     constructor() {
         super();
 
+        this.getStopwatches = this.getStopwatches.bind(this);
+
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.appendChild(stopwatchListTemplate.content.cloneNode(true));
 
@@ -115,6 +117,23 @@ class StopwatchList extends HTMLElement {
     enableCreateButton() {
         this.submitButton.removeAttribute("disabled");
         this.submitButton.setAttribute("style", "background-color:#191BA9; border-color:#191BA9;")
+    }
+
+    getStopwatches() {
+        const stopwatches = this.container.getElementsByTagName("stopwatch-custom");
+
+        const data = Object.values(stopwatches).map((value) => {
+            let id = parseInt(value.getAttribute("id").split("-")[1]);
+
+            return {
+                id: parseInt(value.getAttribute("id").split("-")[1]),
+                timer_name: value.getAttribute("name"),
+                time: parseInt(value.getAttribute("time")),
+                state: value.getAttribute("state")
+            }
+        })
+
+        return data;
     }
 }
 

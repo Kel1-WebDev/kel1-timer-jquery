@@ -16,6 +16,9 @@
 		window.addEventListener('beforeunload', function (e) {
 			e.preventDefault()
 
+			const stopwatchList = document.getElementById("stopwatch-list");
+			const stopwatchData = stopwatchList.getStopwatches();
+
 			localStorage.setItem('closed-time', new Date());
 		});
 	</script>
@@ -24,7 +27,7 @@
 </head>
 
 <body class="center-content background-illustration background-broken-white">
-	<stopwatch-list></stopwatch-list>
+	<stopwatch-list id="stopwatch-list"></stopwatch-list>
 </body>
 
 </html>
