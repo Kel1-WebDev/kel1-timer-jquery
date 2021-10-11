@@ -35,5 +35,15 @@ module.exports = function (app) {
                 response.status(200).send("Timer Updated")
             })
 
+    app.route('/timer/:id')
+        .delete((request, response) => {
+            const id = parseInt(request.params.id)
+            
+            pool.query('DELETE FROM timer WHERE id = $1', [id], (error, results) => {
+                if (error) {
+                    throw error
+                }
+                response.status(200).send(`Timer deleted with ID: ${id}`)
+            })
         })
 }
