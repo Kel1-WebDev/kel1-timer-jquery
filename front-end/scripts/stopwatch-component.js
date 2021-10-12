@@ -82,14 +82,13 @@ class Stopwatch extends HTMLElement {
         const parent = this.parentNode;
         parent.removeChild(this);
 
-        // remove from LocalStorage
-        let timer = JSON.parse(localStorage.getItem('timer'));
-
-        timer = timer.filter((value) => {
-            return (("stopwatch-" + value.id) !== this.getAttribute('id'));
-        });
-
-        localStorage.setItem('timer', JSON.stringify(timer));
+        // remove from database
+        const id = this.getAttribute('id').split("-")[1];
+        $.ajax({
+            url: "http://localhost:3000/timer/" + id,
+            type: "DELETE",
+            dataType: "json",
+        })
 
         this.enableCreateButton();
     }

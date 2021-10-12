@@ -54,14 +54,8 @@ class StopwatchList extends HTMLElement {
         })
         .done(function(timer) {
             loadStopwatch(timer);
-
-            if (timer.length >= 10) {
-                this.submitButton.setAttribute("disabled", "disabled");
-                this.submitButton.setAttribute("style", "background-color:#CCCCCC; border-color:transparent");
-            }
         })
 
-        // let timer = JSON.parse(localStorage.getItem('timer'));
     }
 
     connectedCallback() {
@@ -70,33 +64,36 @@ class StopwatchList extends HTMLElement {
 
     createStopwatch() {
         var stopwatchName = this.stopwatchName.value;
-        const stopwatch = document.createElement('stopwatch-custom');
+        const appendStopwatch = (id) => {
+            const stopwatch = document.createElement('stopwatch-custom');
 
-        stopwatch.setAttribute('id', "stopwatch-" + this.lastTimerId);
-        stopwatch.setAttribute('name', stopwatchName);
-        stopwatch.setAttribute('state', 'stop');
-        stopwatch.enableCreateButton = this.enableCreateButton;
+            stopwatch.setAttribute('id', "stopwatch-" + id);
+            stopwatch.setAttribute('name', stopwatchName);
+            stopwatch.setAttribute('state', 'stop');
+            stopwatch.enableCreateButton = this.enableCreateButton;
 
-        this.container.appendChild(stopwatch);
+            this.container.appendChild(stopwatch);
+            
+            const stopwatches = this.container.getElementsByTagName("stopwatch-custom");
+
+            if (stopwatches.length >= 10) {
+                this.submitButton.setAttribute("disabled", "disabled");
+                this.submitButton.setAttribute("style", "background-color:#CCCCCC; border-color:transparent");
+            }
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:3000/timer",
+            data: { timer_name: stopwatchName },
+            dataType: 'json'
+        }) 
+        .done(function(data) {
+            console.log(data)
+            appendStopwatch(data.id)
+        });
 
         this.stopwatchName.value = "";
-
-        let timer = JSON.parse(localStorage.getItem('timer'));
-
-        timer.push({
-            id: this.lastTimerId,
-            name: stopwatchName,
-            state: 'stop',
-            time: '0',
-        })
-
-        localStorage.setItem('timer', JSON.stringify(timer));
-        this.lastTimerId++;
-
-        if (timer.length >= 10) {
-            this.submitButton.setAttribute("disabled", "disabled");
-            this.submitButton.setAttribute("style", "background-color:#CCCCCC; border-color:transparent");
-        }
     }
 
     //untuk memanggil stopwatch dari local storage ketika tab dibuka
@@ -116,6 +113,11 @@ class StopwatchList extends HTMLElement {
             stopwatch.setAttribute('time', timer[i].time);
             stopwatch.enableCreateButton = this.enableCreateButton;
             this.container.appendChild(stopwatch);
+        }
+
+        if (timer.length >= 10) {
+            this.submitButton.setAttribute("disabled", "disabled");
+            this.submitButton.setAttribute("style", "background-color:#CCCCCC; border-color:transparent");
         }
     }
 
