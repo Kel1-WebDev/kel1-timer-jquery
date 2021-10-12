@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
-	<link href="http://fonts.cdnfonts.com/css/digital-7-mono" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+<link href="http://fonts.cdnfonts.com/css/digital-7-mono" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,15 +20,16 @@
 
 			const stopwatchList = document.getElementById("stopwatch-list");
 			const stopwatchData = stopwatchList.getStopwatches();
-			
-			await $.ajax({
-				data:stopwatchData,
-				dataType:'JSON',
-				url:'http://localhost:3000/timer',
-				type:'PUT'
-			});
 
 			localStorage.setItem('closed-time', new Date());
+
+			// Update the database
+			await $.ajax({
+				data: { key: stopwatchData },
+				dataType: 'JSON',
+				url: 'http://localhost:3000/timer',
+				type: 'PUT'
+			});
 		});
 	</script>
 	<link rel="stylesheet" href="styles/main.css" />
