@@ -55,9 +55,11 @@ cronômetro (in Italian) or commonly known as a stopwatch (in English) is an app
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Built With
-* Vanilla JS
 * HTML
 * CSS
+* jQuery
+* NodeJS
+* PostgreSQL
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -107,7 +109,10 @@ To use this app, you can:
 - [x] Fix Bugs
 - [x] Create Mock Up
 - [x] Add Styling 
-- [x] Write Documentation 
+- [x] Write Documentation
+- [x] Create database model
+- [x] Create API
+- [x] Connect front-end to back-end 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
