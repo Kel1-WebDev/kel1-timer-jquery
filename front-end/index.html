@@ -5,6 +5,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
 	<link href="http://fonts.cdnfonts.com/css/digital-7-mono" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,11 +14,18 @@
 	<script src="scripts/stopwatch-list.js"></script>
 	<script src="scripts/stopwatch-component.js"></script>
 	<script>
-		window.addEventListener('beforeunload', function (e) {
+		window.addEventListener('beforeunload', async function (e) {
 			e.preventDefault()
 
 			const stopwatchList = document.getElementById("stopwatch-list");
 			const stopwatchData = stopwatchList.getStopwatches();
+			
+			await $.ajax({
+				data:stopwatchData,
+				dataType:'JSON',
+				url:'http://localhost:3000/timer',
+				type:'PUT'
+			});
 
 			localStorage.setItem('closed-time', new Date());
 		});
