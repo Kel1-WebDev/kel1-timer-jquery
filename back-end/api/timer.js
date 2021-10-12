@@ -34,7 +34,7 @@ module.exports = function (app) {
                 }
                 response.status(200).send("Timer Updated")
             })
-
+        })
     app.route('/timer/:id')
         .delete((request, response) => {
             const id = parseInt(request.params.id)
