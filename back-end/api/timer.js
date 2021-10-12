@@ -24,7 +24,7 @@ module.exports = function (app) {
         })
 
         .put((request, response) => {
-            let body = request.body
+            let body = request.body.key
             body = body.map((value) => { return "(" + value.id + ",\'" + value.timer_name + "\'," + value.time + ",\'" + value.state + "\')"; });
             body = body.join(",");
             const query = 'UPDATE timer SET timer_name=tmp.timer_name, time=tmp.time, state=tmp.state FROM (VALUES ' + body + ') AS tmp (id,timer_name,time,state) WHERE timer.id=tmp.id'
@@ -35,10 +35,11 @@ module.exports = function (app) {
                 response.status(200).send("Timer Updated")
             })
         })
+
     app.route('/timer/:id')
         .delete((request, response) => {
             const id = parseInt(request.params.id)
-            
+
             pool.query('DELETE FROM timer WHERE id = $1', [id], (error, results) => {
                 if (error) {
                     throw error
