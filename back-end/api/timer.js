@@ -1,4 +1,3 @@
-const { request, response } = require('express');
 const { pool } = require('../db/connect');
 
 module.exports = function (app) {
@@ -10,6 +9,7 @@ module.exports = function (app) {
                 if (error) {
                     throw error
                 }
+
                 response.status(201).send({ id: results.rows[0].id })
             })
         })
@@ -19,6 +19,7 @@ module.exports = function (app) {
                 if (error) {
                     throw error
                 }
+
                 response.status(200).json(results.rows)
             })
         })
@@ -27,11 +28,13 @@ module.exports = function (app) {
             let body = request.body.key
             body = body.map((value) => { return "(" + value.id + ",\'" + value.timer_name + "\'," + value.time + ",\'" + value.state + "\')"; });
             body = body.join(",");
+
             const query = 'UPDATE timer SET timer_name=tmp.timer_name, time=tmp.time, state=tmp.state FROM (VALUES ' + body + ') AS tmp (id,timer_name,time,state) WHERE timer.id=tmp.id'
             pool.query(query, (error, results) => {
                 if (error) {
                     throw error
                 }
+
                 response.status(200).send("Timer Updated")
             })
         })
@@ -44,6 +47,7 @@ module.exports = function (app) {
                 if (error) {
                     throw error
                 }
+
                 response.status(200).send(`Timer deleted with ID: ${id}`)
             })
         })
